@@ -1,0 +1,30 @@
+﻿@model List<ARTICLE.Models.Category>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Kategori Listesi</h1>
+<br/>
+<table class="table table-bordered">
+    <tr>
+        <th>Kategori Numarası</th>
+        <th>Kategori Adı</th>
+        <th>Sil</th>
+        <th>Güncelle</th>
+    </tr>
+    @foreach (var x in Model)
+    {
+       <tr>
+           <td>@x.CategoryID</td>
+           <td>@x.CategoryName</td>
+           <td><a href="/Category/CategoryDelete/@x.CategoryID" class="btn btn-danger">Sil</a>
+           <td><a href="/Category/CategoryGet/@x.CategoryID" class="btn btn-success">Güncelle</a>
+
+       </tr> 
+    }
+</table>
+
+<a href="/Category/CategoryAdd/" class="btn btn-primary">Yeni Kategori Ekle</a>
+
