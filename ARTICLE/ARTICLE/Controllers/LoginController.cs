@@ -18,21 +18,36 @@ namespace ARTICLE.Controllers
         }
         
         [HttpPost]
-        public IActionResult Index(UserAdmin p)
-        {
-
-           
-            var adminuserinfo = c.UserAdmins.FirstOrDefault
-                (x => x.UserName == p.UserName && x.Password == p.Password);
-            if (adminuserinfo != null)
+        public async Task<IActionResult> Index(UserAdmin p) { 
+        var datavalue = c.UserAdmins.FirstOrDefault(x => x.UserName == p.UserName &&
+        x.Password == p.Password);
+            if (datavalue != null)
             {
-                return RedirectToAction("Index", "UserAdmin");
-            }
-            else
-            {
-                return RedirectToAction("Index");
+                var claims = new List<Claim>
+         {
+             new Claim(ClaimTypes.Name,p.UserName)
+         };
+                var useridentity = new ClaimsIdentity(claims, "Login");
+                ClaimsPrincipal principal = new ClaimsPrincipal(useridentity);
+                await HttpContext.SignInAsync(principal);
+                return RedirectToAction("Index", "Category");
             }
             return View();
+        //public IActionResult Index(UserAdmin p)
+        //{
+
+           
+        //    var adminuserinfo = c.UserAdmins.FirstOrDefault
+        //        (x => x.UserName == p.UserName && x.Password == p.Password);
+        //    if (adminuserinfo != null)
+        //    {
+        //        return RedirectToAction("Index", "UserAdmin");
+        //    }
+        //    else
+        //    {
+        //        return RedirectToAction("Index");
+        //    }
+        //    return View();
         }
     }
 }
