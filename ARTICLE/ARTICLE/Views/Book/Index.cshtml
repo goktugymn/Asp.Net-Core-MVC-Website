@@ -1,0 +1,42 @@
+﻿@using X.PagedList;
+@using X.PagedList.Mvc.Core;
+
+@model IPagedList<ARTICLE.Models.Book>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<h1>Kitapların Listesi</h1>
+<br />
+<table class="table table-bordered">
+    <tr>
+        <th>Kitap Numarası</th>
+        <th>Kitap Adı</th>
+        <th>Fiyat(TL)</th>
+        <th>Stok</th>
+        <th>Kategori Adı</th>
+        <th>Sil</th>
+        <th>Güncelle</th>
+        <th>Detaylar</th>
+    </tr>
+    @foreach (var x in Model)
+    {
+        <tr>
+            <th>@x.BookID</th>
+            <td>@x.BookName</td>
+            <td>@x.Price</td>
+            <td>@x.Stock</td>
+            <td>@x.Category.CategoryName</td>
+            <td><a href="/Book/DeleteBook/@x.BookID" class="btn btn-danger">Sil</a>
+            <td><a href="/Book/BookGet/@x.BookID" class="btn btn-success">Güncelle</a>
+            <td><a href="#" class="btn btn-info">Detaylar</a>
+
+        </tr>
+    }
+</table>
+
+@Html.PagedListPager((IPagedList)Model,page=>Url.Action("Index", new {page}))
+<a href="/Book/AddBook/" class="btn btn-primary">Yeni Kitap Ekle</a>
