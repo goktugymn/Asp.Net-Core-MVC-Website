@@ -14,6 +14,8 @@ namespace ARTICLE.Models
             }
             public DbSet<Book> Books { get; set; }
             public DbSet<Category> Categories { get; set; }
+            public DbSet<UserAdmin> UserAdmins { get; set; }
+            
         }
     }
 
